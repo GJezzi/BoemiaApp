@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<fragment
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:name="ccom.example.android.boemiaapp.app"
+    android:id="@+id/login_fragment"
+    tools:layout="@layout/login_button"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <include
-        android:id="@+id/login_button"
-        layout="@layout/login_button">
-
-    </include>
-
-</RelativeLayout>
+    tools:context=".app.MainActivity"
+    >
+</fragment>
