@@ -16,42 +16,11 @@ import com.facebook.login.widget.LoginButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    private LoginButton mFbLoginBtn;
-    private CallbackManager mCallBackManager;
-    private TextView mUserName;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
-        mUserName = (TextView) findViewById(R.id.user_name);
-        mFbLoginBtn = (LoginButton) findViewById(R.id.fb_login_button);
-        mFbLoginBtn.setReadPermissions("user_friends");
-
-        mCallBackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(mCallBackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-
-            }
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
-        mCallBackManager.onActivityResult(requestCode, resultCode,data);
     }
 }

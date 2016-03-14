@@ -6,4 +6,6 @@
     android:orientation="vertical"
     android:gravity="center">
 
+    <include layout="@layout/fragment_main"/>
+
 </LinearLayout>
