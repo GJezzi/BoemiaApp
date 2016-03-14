@@ -3,8 +3,7 @@ package com.example.android.boemiaapp.app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.TextViewCompat;
-import android.support.v7.widget.LinearLayoutCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,6 @@ import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-import org.w3c.dom.Text;
-
 public class MainFragment extends Fragment {
 
     private LoginButton mFbLoginButton;
@@ -29,6 +26,7 @@ public class MainFragment extends Fragment {
     private FacebookCallback<LoginResult> mFbCallback = new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
+            Log.d("Gian", "onSucces");
             AccessToken accessToken = loginResult.getAccessToken();
             Profile profile = Profile.getCurrentProfile();
 
@@ -39,12 +37,12 @@ public class MainFragment extends Fragment {
 
         @Override
         public void onCancel() {
-
+            Log.d("Gian", "onCancel");
         }
 
         @Override
         public void onError(FacebookException error) {
-
+            Log.d("Gian", "onError " + error);
         }
     };
 
@@ -58,23 +56,19 @@ public class MainFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view =  inflater.inflate(R.layout.fragment_main, container, false);
-
-
-
-        return view;
+       return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mUserName = (TextView) view.findViewById(R.id.user_name);
-
         mFbLoginButton = (LoginButton) view.findViewById(R.id.fb_login_button);
         mFbLoginButton.setReadPermissions("user_friends");
         mFbLoginButton.setFragment(this);
         mFbLoginButton.registerCallback(mCallbackManager, mFbCallback);
+
+        mUserName = (TextView) view.findViewById(R.id.user_name);
     }
 
     @Override
