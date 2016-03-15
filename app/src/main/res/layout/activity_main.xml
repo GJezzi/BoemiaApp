@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    tools:layout="@layout/fragment_main">
-</FrameLayout>
+    android:layout_height="match_parent" >
+
+    <fragment
+        android:name="com.example.android.boemiaapp.app.MainFragment"
+        android:id="@+id/fb_login_fragment"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        tools:layout="@layout/fragment_main" />
+
+</RelativeLayout>
