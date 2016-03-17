@@ -11,8 +11,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String FRAGMENT_TAG = "fragment_tag";
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         FacebookSdk.sdkInitialize(getApplicationContext());

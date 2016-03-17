@@ -30,7 +30,7 @@ public class MainFragment extends Fragment {
     private FacebookCallback<LoginResult> mFbCallback = new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
-            Log.d("Gian", "onSucces");
+            Log.d("Gian", "onSuccess");
             AccessToken accessToken = loginResult.getAccessToken();
             Profile profile = Profile.getCurrentProfile();
             mUserName.setText(setupWelcomeMessage(profile));
