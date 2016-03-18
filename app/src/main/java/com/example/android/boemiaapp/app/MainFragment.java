@@ -22,15 +22,20 @@ import com.facebook.login.widget.LoginButton;
 
 public class MainFragment extends Fragment {
 
-    private LoginButton mFbLoginButton;
+    private final String LOG_TAG = MainFragment.class.getSimpleName();
+
     private AccessTokenTracker mTokenTracker;
     private ProfileTracker mProfileTracker;
     private CallbackManager mCallbackManager;
     private TextView mUserName;
+    private LoginResult mLoginResult;
+    private AccessToken mAccessToken;
+    private LocationFragment mLocationFragment;
+
     private FacebookCallback<LoginResult> mFbCallback = new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
-            Log.d("Gian", "onSuccess");
+            Log.d(LOG_TAG, "Facebook LoginButton onSuccess");
             AccessToken accessToken = loginResult.getAccessToken();
             Profile profile = Profile.getCurrentProfile();
             mUserName.setText(setupWelcomeMessage(profile));
@@ -38,12 +43,16 @@ public class MainFragment extends Fragment {
 
         @Override
         public void onCancel() {
-            Log.d("Gian", "onCancel");
+            Log.d(LOG_TAG, "Facebook LoginButton onCancel");
+            if (mLoginResult.getAccessToken() != null) {
+                Log.d(LOG_TAG, "Access Token: " + mLoginResult.getAccessToken());
+            }
         }
 
         @Override
         public void onError(FacebookException error) {
-            Log.d("Gian", "onError " + error);
+            Log.d(LOG_TAG, "Facebook LoginButton onError" + error.getMessage());
+            Log.d(LOG_TAG, "Facebook LoginButton onError" + error.getStackTrace());
         }
     };
 
@@ -54,6 +63,8 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mCallbackManager = CallbackManager.Factory.create();
 
+        checkLoginStatus(AccessToken.getCurrentAccessToken());
+
         setupTokenTracker();
         setupProfileTracker();
 
@@ -63,7 +74,9 @@ public class MainFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-       return inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+       return rootView;
     }
 
     @Override
@@ -72,7 +85,6 @@ public class MainFragment extends Fragment {
 
         setupUserDetails(view);
         setupFbLoginButton(view);
-
     }
 
     @Override
@@ -104,6 +116,7 @@ public class MainFragment extends Fragment {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
                 Log.d("Current Token: ", "" + currentAccessToken);
+
             }
         };
     }
@@ -119,6 +132,7 @@ public class MainFragment extends Fragment {
     }
 
     private void setupFbLoginButton(View view) {
+        LoginButton mFbLoginButton;
         mFbLoginButton = (LoginButton) view.findViewById(R.id.fb_login_button);
         mFbLoginButton.setFragment(this);
         mFbLoginButton.setReadPermissions("user_friends");
@@ -131,5 +145,15 @@ public class MainFragment extends Fragment {
             stringBuilder.append("Welcome " + profile.getName() + "!");
         }
         return stringBuilder.toString();
+    }
+
+    private void checkLoginStatus(AccessToken currentAccessToken) {
+        if (currentAccessToken != null) {
+            LocationFragment locationFragment = new LocationFragment();
+            locationFragment.getContext();
+
+
+
+        }
     }
 }

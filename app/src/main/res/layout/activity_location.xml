@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.boemiaapp.app.LocationActivity">
 
-    <include layout="@layout/tool_bar" />
+
+    <fragment
+        android:name="com.example.android.boemiaapp.app.LocationFragment"
+        android:id="@+id/location_fragment"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        tools:layout="@layout/fragment_location" />
 
 </LinearLayout>
