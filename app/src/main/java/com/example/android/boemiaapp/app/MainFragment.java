@@ -38,7 +38,11 @@ public class MainFragment extends Fragment {
             Log.d(LOG_TAG, "Facebook LoginButton onSuccess");
             AccessToken accessToken = loginResult.getAccessToken();
             Profile profile = Profile.getCurrentProfile();
-            mUserName.setText(setupWelcomeMessage(profile));
+            //mUserName.setText(setupWelcomeMessage(profile));
+
+            Intent intent = new Intent(getActivity(), LocationActivity.class);
+            startActivity(intent);
+
         }
 
         @Override
@@ -63,7 +67,7 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mCallbackManager = CallbackManager.Factory.create();
 
-        checkLoginStatus(AccessToken.getCurrentAccessToken());
+
 
         setupTokenTracker();
         setupProfileTracker();
@@ -147,13 +151,4 @@ public class MainFragment extends Fragment {
         return stringBuilder.toString();
     }
 
-    private void checkLoginStatus(AccessToken currentAccessToken) {
-        if (currentAccessToken != null) {
-            LocationFragment locationFragment = new LocationFragment();
-            locationFragment.getContext();
-
-
-
-        }
-    }
 }
