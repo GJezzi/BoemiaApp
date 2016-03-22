@@ -38,10 +38,12 @@ public class MainFragment extends Fragment {
             Log.d(LOG_TAG, "Facebook LoginButton onSuccess");
             AccessToken accessToken = loginResult.getAccessToken();
             Profile profile = Profile.getCurrentProfile();
-            //mUserName.setText(setupWelcomeMessage(profile));
+            mUserName.setText(setupWelcomeMessage(profile));
 
             Intent intent = new Intent(getActivity(), LocationActivity.class);
             startActivity(intent);
+
+
 
         }
 
@@ -66,8 +68,6 @@ public class MainFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         mCallbackManager = CallbackManager.Factory.create();
-
-
 
         setupTokenTracker();
         setupProfileTracker();
