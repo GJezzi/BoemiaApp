@@ -9,7 +9,9 @@ import com.facebook.FacebookSdk;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String FRAGMENT_TAG = "fragment_tag";
+    private final String LOG_TAG = MainActivity.class.getSimpleName();
+
+    public static final String LOCATIONFRAGMENT_TAG = "LFTAG";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

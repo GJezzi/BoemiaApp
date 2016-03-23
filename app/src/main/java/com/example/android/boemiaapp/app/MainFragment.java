@@ -22,7 +22,7 @@ import com.facebook.login.widget.LoginButton;
 
 public class MainFragment extends Fragment {
 
-    private final String LOG_TAG = MainFragment.class.getSimpleName();
+    public static final String LOG_TAG = MainFragment.class.getSimpleName();
 
     private AccessTokenTracker mTokenTracker;
     private ProfileTracker mProfileTracker;

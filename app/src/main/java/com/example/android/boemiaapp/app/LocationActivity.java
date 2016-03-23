@@ -15,5 +15,13 @@ public class LocationActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+
+        if (savedInstanceState == null) {
+            LocationFragment locationFragment = new LocationFragment();
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.location_container, locationFragment)
+                    .commit();
+        }
     }
 }
