@@ -1,23 +1,24 @@
 package com.example.android.boemiaapp.app;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.boemiaapp.R;
-
-import java.util.ArrayList;
 
 /**
  * Created by gjezzi on 24/03/16.
  */
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationAdapterViewHolder> {
 
-    private ArrayList<LocationInfo> mLocationList;
-    private static
+
+    private Cursor mCursor;
+    private Context mContext;
+    private int mPosition;
 
     public class LocationAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final TextView mLocationName;
@@ -44,11 +45,13 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
     @Override
     public void onBindViewHolder(LocationAdapterViewHolder locationAdapterViewHolder, int position) {
-
+        locationAdapterViewHolder.mLocationAddress.setText(mContext.getText(R.string.location_address_text_view));
+        locationAdapterViewHolder.mLocationName.setText(mContext.getText(R.string.location_name_text_view));
+        mPosition = locationAdapterViewHolder.getAdapterPosition();
     }
 
     @Override
     public int getItemCount() {
-        return
+        return mPosition;
     }
 }
