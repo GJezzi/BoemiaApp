@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.android.boemiaapp.R;
 
+import java.util.ArrayList;
+
 public class LocationActivity extends AppCompatActivity {
 
     private static String LOG_TAG = LocationActivity.class.getSimpleName();
@@ -17,18 +19,25 @@ public class LocationActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_location_list);
+        mRecyclerView = (RecyclerView) findViewById(R.id.location_recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new LocationAdapter();
+        ArrayList<LocationInfo> locationInfo = new ArrayList<>();
+        for (int i = 0; i < LocationData.locationAddress.length; i++){
+            locationInfo.add(new LocationInfo(LocationData.locationName[i],
+                    LocationData.locationAddress[i]));
+        }
+
+        mAdapter = new LocationAdapter(locationInfo);
         mRecyclerView.setAdapter(mAdapter);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
