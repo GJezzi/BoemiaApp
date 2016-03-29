@@ -33,7 +33,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         }
 
         public void onClick(View v) {
-
+            int adapterPosition = getAdapterPosition();
         }
     }
 

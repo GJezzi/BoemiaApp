@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 
 import com.example.android.boemiaapp.R;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
 
@@ -17,6 +17,8 @@ public class LocationActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private GoogleApiAvailability mGoogleApiAvailability;
 
 
 
@@ -39,9 +41,6 @@ public class LocationActivity extends AppCompatActivity {
 
         mAdapter = new LocationAdapter(locationInfo);
         mRecyclerView.setAdapter(mAdapter);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
 
         if (savedInstanceState == null) {
             LocationFragment locationFragment = new LocationFragment();
