@@ -4,9 +4,10 @@
     <string name="action_details">Details</string>
     <string name="action_refresh">Refresh</string>
 
+
     <string name="facebook_app_id">1566555970322030</string>
-    <string name="google_places_api_id">AIzaSyDYeUnaFoqh7hPRN7kYky5CFLynqB57Axw</string>
-    <string name="android_key">AIzaSyDX1RdfP-zOsog3WpfHFoYx9fJZvCKBmyM</string>
+    <string name="google_api_id">AIzaSyDYeUnaFoqh7hPRN7kYky5CFLynqB57Axw</string>
+
     <string name="title_activity_login">Sign in</string>
     <string name="location_name_text_view">Pampa Burger</string>
     <string name="location_address_text_view">Avenida Ipiranga</string>
@@ -21,9 +22,6 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
-
-    <string name="client_id">IYS5412OVCTWNSVPNTPDRLEPBFW2JCSVICMIZOAUYKAABBQ1</string>
-    <string name="client_secret">D51INDHRNWSSH0UZQD4QGT2S5BBONAUCK1WTJIEEHHBS1E3E</string>
 
     <!-- Strings related to foursquare -->
     <string name="foursquare_client_id">IYS5412OVCTWNSVPNTPDRLEPBFW2JCSVICMIZOAUYKAABBQ1</string>

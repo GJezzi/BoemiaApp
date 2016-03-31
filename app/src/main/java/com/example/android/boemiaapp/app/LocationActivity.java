@@ -55,6 +55,11 @@ public class LocationActivity extends AppCompatActivity {
 
     }
 
+
+    protected void onSavedInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
     /**
      * Check the device to make sure it has the Google Play Services APK. If
      * it doesn't, display a dialog that allows users to download the APK from
