@@ -24,10 +24,12 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 public class LocationFragment extends Fragment {
 
     private final String LOG_TAG = LocationFragment.class.getSimpleName();
-    private final static int PLACE_PICKER_REQUEST = 9191;
+    private final static int PLACE_PICKER_REQUEST = 1;
+
 
     private FloatingActionButton mFAB;
     private LocationAdapter mLocationAdapter;
+    private LocationActivity mLocationActivity;
 
     public LocationFragment() {}
 
@@ -44,17 +46,17 @@ public class LocationFragment extends Fragment {
                     PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
                     Intent intent = builder.build(getActivity());
                     startActivityForResult(intent, PLACE_PICKER_REQUEST);
+                    Log.d(LOG_TAG, "Place Picker Opened");
                 }
                 catch (GooglePlayServicesRepairableException e) {
                     GooglePlayServicesUtil.showErrorDialogFragment(e.getConnectionStatusCode(), getActivity(), 0);
                     Log.d(LOG_TAG, "GooglePlayServicesRepairableException thrown");
+                    e.printStackTrace();
 
                 } catch (GooglePlayServicesNotAvailableException e) {
                     Toast.makeText(getActivity(), "Google Play Services is not Available", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
                 }
-
-
-
             }
         });
 
@@ -75,7 +77,6 @@ public class LocationFragment extends Fragment {
                 if (attribution == null) {
                     attribution = "";
                 }
-
 
             }
 

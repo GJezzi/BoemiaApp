@@ -42,9 +42,6 @@ public class MainFragment extends Fragment {
 
             Intent intent = new Intent(getActivity(), LocationActivity.class);
             startActivity(intent);
-
-
-
         }
 
         @Override
