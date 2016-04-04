@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/location_container"
     tools:context=".app.MainActivity">
 
+
     <fragment
-        android:name="com.example.android.boemiaapp.app.MainFragment"
-        android:id="@+id/fb_login_fragment"
+        android:name="com.example.android.boemiaapp.app.LocationFragment"
+        android:id="@+id/location_fragment"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_location" />
 
 </LinearLayout>

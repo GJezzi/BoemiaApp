@@ -5,8 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -18,6 +23,8 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
+import java.util.ArrayList;
+
 /**
  * Created by gjezzi on 18/03/16.
  */
@@ -28,14 +35,55 @@ public class LocationFragment extends Fragment {
 
 
     private FloatingActionButton mFAB;
-    private LocationAdapter mLocationAdapter;
-    private LocationActivity mLocationActivity;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+
 
     public LocationFragment() {}
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Add this line in order for this fragment to handle menu events.
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+//
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View rootView = inflater.inflate(R.layout.fragment_location, container, false);
+
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.location_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        ArrayList<LocationInfo> locationInfo = new ArrayList<>();
+        for (int i = 0; i < LocationData.locationAddress.length; i++){
+            locationInfo.add(new LocationInfo(LocationData.locationName[i],
+                    LocationData.locationAddress[i]));
+        }
+
+        mAdapter = new LocationAdapter(locationInfo);
+        mRecyclerView.setAdapter(mAdapter);
 
         mFAB = (FloatingActionButton) rootView.findViewById(R.id.location_fab);
         mFAB.setOnClickListener(new View.OnClickListener() {

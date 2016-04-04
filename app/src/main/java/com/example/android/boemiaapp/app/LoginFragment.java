@@ -20,9 +20,9 @@ import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-public class MainFragment extends Fragment {
+public class LoginFragment extends Fragment {
 
-    public static final String LOG_TAG = MainFragment.class.getSimpleName();
+    public static final String LOG_TAG = LoginFragment.class.getSimpleName();
 
     private AccessTokenTracker mTokenTracker;
     private ProfileTracker mProfileTracker;
@@ -31,6 +31,7 @@ public class MainFragment extends Fragment {
     private LoginResult mLoginResult;
     private AccessToken mAccessToken;
     private LocationFragment mLocationFragment;
+    private boolean mIsLogged = false;
 
     private FacebookCallback<LoginResult> mFbCallback = new FacebookCallback<LoginResult>() {
         @Override
@@ -39,8 +40,10 @@ public class MainFragment extends Fragment {
             AccessToken accessToken = loginResult.getAccessToken();
             Profile profile = Profile.getCurrentProfile();
             mUserName.setText(setupWelcomeMessage(profile));
+            mIsLogged = true;
 
-            Intent intent = new Intent(getActivity(), LocationActivity.class);
+
+            Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
         }
 
@@ -59,7 +62,7 @@ public class MainFragment extends Fragment {
         }
     };
 
-    public MainFragment(){}
+    public LoginFragment(){}
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -75,7 +78,7 @@ public class MainFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
        return rootView;
     }
