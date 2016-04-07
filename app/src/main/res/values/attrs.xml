@@ -3,7 +3,7 @@
     <declare-styleable name="LocationEditTextPreference">
         <attr name="minLength" format="integer" />
     </declare-styleable>
-    <declare-styleable name="ForecastFragment">
+    <declare-styleable name="LocationFragment">
         <attr name="android:choiceMode" />
         <attr name="autoSelectView" format="boolean"/>
         <attr name="sharedElementTransitions" format="boolean"/>

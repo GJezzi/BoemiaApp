@@ -7,7 +7,7 @@
 
 
     <string name="facebook_app_id">1566555970322030</string>
-    <string name="google_api_id">AIzaSyA31glk_NoNMe4U9oj-Au2PDNfyCSHXaK8</string>
+    <string name="google_api_id">AIzaSyDX1RdfP-zOsog3WpfHFoYx9fJZvCKBmyM</string>
 
     <string name="title_activity_login">Sign in</string>
     <string name="location_name_text_view">Pampa Burger</string>
@@ -27,6 +27,9 @@
     <!-- Strings related to foursquare -->
     <string name="foursquare_client_id">IYS5412OVCTWNSVPNTPDRLEPBFW2JCSVICMIZOAUYKAABBQ1</string>
     <string name="foursquare_client_secret">D51INDHRNWSSH0UZQD4QGT2S5BBONAUCK1WTJIEEHHBS1E3E</string>
+
+    <string name="pref_location_latitude">loc-latitude</string>
+    <string name="pref_location_longitude">loc-longitude</string>
 
 
 </resources>

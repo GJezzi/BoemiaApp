@@ -19,6 +19,7 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
@@ -34,6 +35,9 @@ public class LocationFragment extends Fragment {
     private FloatingActionButton mFAB;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
+    private ArrayList<LocationInfo> mLocations;
+    private LocationAdapter mLocationAdapter;
+
 
 
     public LocationFragment() {}
@@ -45,7 +49,6 @@ public class LocationFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View rootView = inflater.inflate(R.layout.fragment_location, container, false);
@@ -55,13 +58,7 @@ public class LocationFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        ArrayList<LocationInfo> locationInfo = new ArrayList<>();
-        for (int i = 0; i < LocationData.locationAddress.length; i++){
-            locationInfo.add(new LocationInfo(LocationData.locationName[i],
-                    LocationData.locationAddress[i]));
-        }
-
-        mAdapter = new LocationAdapter(locationInfo);
+        mAdapter = new LocationAdapter(getActivity(), mLocations);
         mRecyclerView.setAdapter(mAdapter);
 
         mFAB = (FloatingActionButton) rootView.findViewById(R.id.location_fab);
@@ -94,17 +91,31 @@ public class LocationFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                Place place = PlacePicker.getPlace(getActivity(), data);
+                Place selectedPlace = PlacePicker.getPlace(getActivity(), data);
 
-                CharSequence name = place.getName();
-                CharSequence address = place.getAddress();
-                String placeID = place.getId();
-                String attribution = PlacePicker.getAttributions(data);
+                final CharSequence mName = selectedPlace.getName();
+                final CharSequence mAddress = selectedPlace.getAddress();
+                LatLng latLong = selectedPlace.getLatLng();
 
-                if (attribution == null) {
-                    attribution = "";
+                String attributions = PlacePicker.getAttributions(data);
+                if (attributions == null) {
+                    attributions = "";
                 }
 
+                LocationInfo locationInfo = new LocationInfo();
+                locationInfo.setLocationName(mName.toString());
+                locationInfo.setLocationAddress(mAddress.toString());
+                locationInfo.setLat(latLong.latitude);
+                locationInfo.setLong(latLong.longitude);
+
+                if (mLocations.contains(locationInfo)) {
+                    mLocations.remove(locationInfo);
+                }
+
+                mLocations.add(locationInfo);
+                mLocationAdapter.notifyDataSetChanged();
+            } else {
+                super.onActivityResult(requestCode, resultCode, data);
             }
 
         }
