@@ -64,6 +64,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
     @Override
     public int getItemCount() {
+        if (mLocations == null) return 0;
         return mLocations.size();
     }
 }

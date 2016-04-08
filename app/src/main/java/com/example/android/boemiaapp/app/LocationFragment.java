@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.boemiaapp.R;
@@ -34,8 +35,7 @@ public class LocationFragment extends Fragment {
 
     private FloatingActionButton mFAB;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private ArrayList<LocationInfo> mLocations;
+    private ArrayList<LocationInfo> mLocations = new ArrayList<>();
     private LocationAdapter mLocationAdapter;
 
 
@@ -54,12 +54,14 @@ public class LocationFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_location, container, false);
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.location_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        View emptyView = rootView.findViewById(R.id.recyclerview_location_empty);
 
-        mAdapter = new LocationAdapter(getActivity(), mLocations);
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setHasFixedSize(true);
+
+        mLocationAdapter = new LocationAdapter(getActivity(), mLocations);
+        mRecyclerView.setAdapter(mLocationAdapter);
 
         mFAB = (FloatingActionButton) rootView.findViewById(R.id.location_fab);
         mFAB.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +86,7 @@ public class LocationFragment extends Fragment {
             }
         });
 
+        updateEmptyView();
         return rootView;
     }
 
@@ -118,6 +121,17 @@ public class LocationFragment extends Fragment {
                 super.onActivityResult(requestCode, resultCode, data);
             }
 
+        }
+
+    }
+
+    private void updateEmptyView() {
+        if (mLocationAdapter.getItemCount() == 0 ) {
+            TextView textView = (TextView) getView().findViewById(R.id.recyclerview_location_empty);
+            if (null != textView) {
+                int message = R.string.empty_location_list;
+                textView.setText(message);
+            }
         }
     }
 }
