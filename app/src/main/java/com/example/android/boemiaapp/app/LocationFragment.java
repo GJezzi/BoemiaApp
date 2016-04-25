@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.boemiaapp.R;
@@ -32,13 +31,8 @@ public class LocationFragment extends Fragment {
     private final String LOG_TAG = LocationFragment.class.getSimpleName();
     private final static int PLACE_PICKER_REQUEST = 1;
 
-
-    private FloatingActionButton mFAB;
-    private RecyclerView mRecyclerView;
-    private ArrayList<LocationInfo> mLocations = new ArrayList<>();
+    private ArrayList<Locations> mLocations = new ArrayList<>();
     private LocationAdapter mLocationAdapter;
-
-
 
     public LocationFragment() {}
 
@@ -53,18 +47,21 @@ public class LocationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View rootView = inflater.inflate(R.layout.fragment_location, container, false);
 
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.location_recycler_view);
+        RecyclerView recyclerView;
+        FloatingActionButton floatingActionButton;
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        View emptyView = rootView.findViewById(R.id.recyclerview_location_empty);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.location_recycler_view);
 
-        mRecyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        View emptyView = rootView.findViewById(R.id.recycler_view_location_empty);
+
+        recyclerView.setHasFixedSize(true);
 
         mLocationAdapter = new LocationAdapter(getActivity(), mLocations);
-        mRecyclerView.setAdapter(mLocationAdapter);
+        recyclerView.setAdapter(mLocationAdapter);
 
-        mFAB = (FloatingActionButton) rootView.findViewById(R.id.location_fab);
-        mFAB.setOnClickListener(new View.OnClickListener() {
+        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.location_fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -86,7 +83,6 @@ public class LocationFragment extends Fragment {
             }
         });
 
-        updateEmptyView();
         return rootView;
     }
 
@@ -105,7 +101,7 @@ public class LocationFragment extends Fragment {
                     attributions = "";
                 }
 
-                LocationInfo locationInfo = new LocationInfo();
+                Locations locationInfo = new Locations();
                 locationInfo.setLocationName(mName.toString());
                 locationInfo.setLocationAddress(mAddress.toString());
                 locationInfo.setLat(latLong.latitude);
@@ -123,15 +119,5 @@ public class LocationFragment extends Fragment {
 
         }
 
-    }
-
-    private void updateEmptyView() {
-        if (mLocationAdapter.getItemCount() == 0 ) {
-            TextView textView = (TextView) getView().findViewById(R.id.recyclerview_location_empty);
-            if (null != textView) {
-                int message = R.string.empty_location_list;
-                textView.setText(message);
-            }
-        }
     }
 }

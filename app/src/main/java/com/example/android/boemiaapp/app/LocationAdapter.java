@@ -1,10 +1,13 @@
 package com.example.android.boemiaapp.app;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,9 +21,10 @@ import java.util.ArrayList;
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationViewHolder> {
 
     private Context mContext;
-    private ArrayList<LocationInfo> mLocations;
+    private ArrayList<Locations> mLocations;
+    private AlertDialog mAlert;
 
-    public LocationAdapter (Context context, ArrayList<LocationInfo> locations) {
+    public LocationAdapter (Context context, ArrayList<Locations> locations) {
         this.mContext = context;
         this.mLocations = locations;
     }
@@ -40,8 +44,8 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         }
 
         public void onClick(View v) {
+            beerRating();
             Toast.makeText(mContext, mLocationName.getText().toString(), Toast.LENGTH_SHORT).show();
-            int adapterPosition = getAdapterPosition();
         }
     }
 
@@ -56,15 +60,36 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     @Override
     public void onBindViewHolder(LocationViewHolder locationAdapterViewHolder, int position) {
 
-        LocationInfo locationInfo = mLocations.get(position);
+        Locations locations = mLocations.get(position);
 
-        locationAdapterViewHolder.mLocationName.setText(locationInfo.getLocationName());
-        locationAdapterViewHolder.mLocationAddress.setText(locationInfo.getLocationAddress());
+        locationAdapterViewHolder.mLocationName.setText(locations.getLocationName());
+        locationAdapterViewHolder.mLocationAddress.setText(locations.getLocationAddress());
     }
 
     @Override
     public int getItemCount() {
         if (mLocations == null) return 0;
         return mLocations.size();
+    }
+
+
+    private void beerRating() {
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle(null);
+        View ratingDialogView = inflater.inflate(R.layout.rating_alert_dialog, null, false);
+        RatingBar ratingBar = (RatingBar) ratingDialogView.findViewById(R.id.beer_rating_bar);
+        ratingBar.setRating(0);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setView(ratingDialogView);
+        mAlert = builder.create();
+        mAlert.show();
     }
 }
