@@ -2,7 +2,6 @@ package com.example.android.boemiaapp.app;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,7 @@ import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends android.support.v4.app.Fragment {
 
     public static final String LOG_TAG = LoginFragment.class.getSimpleName();
 

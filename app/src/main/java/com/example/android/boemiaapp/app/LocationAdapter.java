@@ -22,7 +22,6 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
     private Context mContext;
     private ArrayList<Locations> mLocations;
-    private AlertDialog mAlert;
 
     public LocationAdapter (Context context, ArrayList<Locations> locations) {
         this.mContext = context;
@@ -40,6 +39,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
             this.mContext = context;
             mLocationName = (TextView) view.findViewById(R.id.list_item_location_name_textview);
             mLocationAddress = (TextView) view.findViewById(R.id.list_item_location_address_textview);
+
             view.setOnClickListener(this);
         }
 
@@ -72,11 +72,12 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         return mLocations.size();
     }
 
-
     private void beerRating() {
+        AlertDialog alertDialog;
         LayoutInflater inflater = LayoutInflater.from(mContext);
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setTitle(null);
+
         View ratingDialogView = inflater.inflate(R.layout.rating_alert_dialog, null, false);
         RatingBar ratingBar = (RatingBar) ratingDialogView.findViewById(R.id.beer_rating_bar);
         ratingBar.setRating(0);
@@ -89,7 +90,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         });
 
         builder.setView(ratingDialogView);
-        mAlert = builder.create();
-        mAlert.show();
+        alertDialog = builder.create();
+        alertDialog.show();
     }
 }

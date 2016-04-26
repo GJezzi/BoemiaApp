@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,7 +25,7 @@ import java.util.ArrayList;
 /**
  * Created by gjezzi on 18/03/16.
  */
-public class LocationFragment extends Fragment {
+public class LocationFragment extends android.support.v4.app.Fragment {
 
     private final String LOG_TAG = LocationFragment.class.getSimpleName();
     private final static int PLACE_PICKER_REQUEST = 1;
