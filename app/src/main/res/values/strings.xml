@@ -12,6 +12,7 @@
     <string name="title_activity_login">Sign in</string>
     <string name="location_name_text_view">Pampa Burger</string>
     <string name="location_address_text_view">Avenida Ipiranga</string>
+    <string name="location_type_text_view">Bar</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

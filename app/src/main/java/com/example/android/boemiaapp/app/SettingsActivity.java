@@ -8,6 +8,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RatingBar;
 
 import com.example.android.boemiaapp.R;
 
@@ -79,5 +80,11 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
             preference.setSummary(stringValue);
         }
         return true;
+    }
+
+
+    public void onRatingChange(RatingBar ratingBar, float rating, boolean fromTouch) {
+        final int numStars = ratingBar.getNumStars();
+
     }
 }

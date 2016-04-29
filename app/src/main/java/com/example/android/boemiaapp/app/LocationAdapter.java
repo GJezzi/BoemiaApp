@@ -9,61 +9,80 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.boemiaapp.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
  * Created by gjezzi on 24/03/16.
  */
-public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationViewHolder> {
+public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationViewHolder> implements RatingBar.OnRatingBarChangeListener{
 
     private Context mContext;
     private ArrayList<Locations> mLocations;
+    int mCount;
+    float mCurRating;
 
     public LocationAdapter (Context context, ArrayList<Locations> locations) {
         this.mContext = context;
         this.mLocations = locations;
+
     }
 
-    public class LocationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class LocationViewHolder extends RecyclerView.ViewHolder {
         private Context mContext;
         public final TextView mLocationName;
-        public final TextView mLocationAddress;
+        public final RatingBar mAlertDialogRatingBar;
+        public final RatingBar mViewHolderRatingBar;
+        //public final TextView mLocationAddress;
+        //public final TextView mType;
 
         public LocationViewHolder(Context context, View view) {
             super(view);
 
             this.mContext = context;
             mLocationName = (TextView) view.findViewById(R.id.list_item_location_name_textview);
-            mLocationAddress = (TextView) view.findViewById(R.id.list_item_location_address_textview);
+            mAlertDialogRatingBar = (RatingBar) view.findViewById(R.id.alert_dialog_rating_bar);
+            mViewHolderRatingBar = (RatingBar) view.findViewById(R.id.list_item_location_rating_bar);
 
-            view.setOnClickListener(this);
+            //mLocationAddress = (TextView) view.findViewById(R.id.list_item_location_address_textview);
+            //mType = (TextView) view.findViewById(R.id.list_item_location_type_text_view);
+
         }
 
-        public void onClick(View v) {
-            beerRating();
-            Toast.makeText(mContext, mLocationName.getText().toString(), Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
     public LocationViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_location, viewGroup, false);
         view.setFocusable(true);
-        LocationViewHolder viewHolder = new LocationViewHolder(mContext, view);
+        final LocationViewHolder viewHolder = new LocationViewHolder(mContext, view);
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int adapterPos = viewHolder.getAdapterPosition();
+                if (adapterPos != RecyclerView.NO_POSITION){
+                    beerRatingAlertDialog();
+                    //Toast.makeText(mContext, mLocationName.getText().toString(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(LocationViewHolder locationAdapterViewHolder, int position) {
-
         Locations locations = mLocations.get(position);
 
         locationAdapterViewHolder.mLocationName.setText(locations.getLocationName());
-        locationAdapterViewHolder.mLocationAddress.setText(locations.getLocationAddress());
+        locationAdapterViewHolder.mViewHolderRatingBar.setRating(locations.getRating());
+        //locationAdapterViewHolder.mLocationAddress.setText(locations.getLocationAddress());
+        //locationAdapterViewHolder.mType.setText(locations.getPlaceType());
     }
 
     @Override
@@ -72,15 +91,17 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         return mLocations.size();
     }
 
-    private void beerRating() {
+    private void beerRatingAlertDialog() {
+        final float rating = 0;
         AlertDialog alertDialog;
-        LayoutInflater inflater = LayoutInflater.from(mContext);
+        final LayoutInflater inflater = LayoutInflater.from(mContext);
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setTitle(null);
 
         View ratingDialogView = inflater.inflate(R.layout.rating_alert_dialog, null, false);
-        RatingBar ratingBar = (RatingBar) ratingDialogView.findViewById(R.id.beer_rating_bar);
-        ratingBar.setRating(0);
+        final RatingBar alertDialogRatingBar = (RatingBar) ratingDialogView.findViewById(R.id.alert_dialog_rating_bar);
+        alertDialogRatingBar.setRating(rating);
+        alertDialogRatingBar.setOnRatingBarChangeListener(this);
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -93,4 +114,11 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         alertDialog = builder.create();
         alertDialog.show();
     }
+
+    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromTouch) {
+        DecimalFormat decimalFormat = new DecimalFormat("#.#");
+        mCurRating = Float.valueOf(decimalFormat.format((mCurRating * mCount + rating) / ++mCount));
+        ratingBar.setRating(mCurRating);
+    }
+
 }

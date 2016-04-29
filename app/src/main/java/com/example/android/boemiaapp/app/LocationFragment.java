@@ -21,6 +21,7 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by gjezzi on 18/03/16.
@@ -92,7 +93,9 @@ public class LocationFragment extends android.support.v4.app.Fragment {
                 Place selectedPlace = PlacePicker.getPlace(getActivity(), data);
 
                 final CharSequence mName = selectedPlace.getName();
-                final CharSequence mAddress = selectedPlace.getAddress();
+                final float mRating = selectedPlace.getRating();
+                //final CharSequence mAddress = selectedPlace.getAddress();
+                final List mType = selectedPlace.getPlaceTypes();
                 LatLng latLong = selectedPlace.getLatLng();
 
                 String attributions = PlacePicker.getAttributions(data);
@@ -102,16 +105,18 @@ public class LocationFragment extends android.support.v4.app.Fragment {
 
                 Locations locationInfo = new Locations();
                 locationInfo.setLocationName(mName.toString());
-                locationInfo.setLocationAddress(mAddress.toString());
+                locationInfo.setRating(mRating);
+                //locationInfo.setLocationAddress(mAddress.toString());
                 locationInfo.setLat(latLong.latitude);
                 locationInfo.setLong(latLong.longitude);
+                //locationInfo.setLocationType(mType.toString());
 
                 if (mLocations.contains(locationInfo)) {
                     mLocations.remove(locationInfo);
                 }
+                    mLocations.add(locationInfo);
+                    mLocationAdapter.notifyDataSetChanged();
 
-                mLocations.add(locationInfo);
-                mLocationAdapter.notifyDataSetChanged();
             } else {
                 super.onActivityResult(requestCode, resultCode, data);
             }

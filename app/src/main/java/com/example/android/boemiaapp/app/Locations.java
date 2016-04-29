@@ -1,24 +1,21 @@
 package com.example.android.boemiaapp.app;
 
-import android.widget.TextView;
-
-import com.google.android.gms.common.api.GoogleApiClient;
-
 /**
  * Created by gjezzi on 22/03/16.
  */
 public class Locations {
 
-    private GoogleApiClient mGoogleApiClient;
-    private Locations mLocationInfo;
-    private TextView mTextView;
+//    private GoogleApiClient mGoogleApiClient;
+//    private Locations mLocationInfo;
+//    private TextView mTextView;
 
     private String mLocationName;
     private String mLocationAddress;
-    private String mOpen;
+    private String mType;
 
     private double mLatitude;
     private double mLongitude;
+    private float mRating;
 
     public String getLocationName() { return mLocationName; }
 
@@ -32,10 +29,10 @@ public class Locations {
         this.mLocationAddress = locationAddress;
     }
 
-    public String getLocationOpened() { return mOpen; }
+    public String getPlaceType() { return mType; }
 
-    public void setLocationOpened(String open) {
-        this.mOpen = open;
+    public void setLocationType(String type) {
+        this.mType = type;
     }
 
     public double getLat() { return mLatitude; }
@@ -49,6 +46,10 @@ public class Locations {
     public void setLong(double longitude) {
         this.mLongitude = longitude;
     }
+
+    public float getRating() { return mRating; }
+
+    public void setRating(float rating) { this.mRating = rating; }
 
     @Override
     public boolean equals(Object o) {

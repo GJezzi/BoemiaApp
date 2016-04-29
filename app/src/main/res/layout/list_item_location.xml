@@ -14,17 +14,37 @@
         android:text="@string/location_name_text_view"
         android:textSize="16sp"
         android:textColor="@android:color/black"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp" />
-
-    <TextView
-        android:id="@+id/list_item_location_address_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/location_address_text_view"
-        android:textSize="16sp"
-        android:textColor="@android:color/black"
+        android:textStyle="bold"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:paddingBottom="12dp"/>
+        android:layout_marginTop="8dp"/>
+
+    <!--<TextView-->
+        <!--android:id="@+id/list_item_location_address_textview"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/location_address_text_view"-->
+        <!--android:textSize="16sp"-->
+        <!--android:textColor="@android:color/darker_gray"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:paddingBottom="12dp"/>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/list_item_location_type_text_view"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="16sp"-->
+        <!--android:textColor="@android:color/darker_gray"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginStart="8dp" />-->
+
+    <RatingBar
+        android:id="@+id/list_item_location_rating_bar"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:ratingBarStyleSmall"/>
 </LinearLayout>
