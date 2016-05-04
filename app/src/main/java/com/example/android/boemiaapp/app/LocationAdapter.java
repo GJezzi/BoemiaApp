@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+
 import com.example.android.boemiaapp.R;
 
 import java.text.DecimalFormat;
@@ -80,7 +81,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         Locations locations = mLocations.get(position);
 
         locationAdapterViewHolder.mLocationName.setText(locations.getLocationName());
-        locationAdapterViewHolder.mViewHolderRatingBar.setRating(locations.getRating());
+        locationAdapterViewHolder.mViewHolderRatingBar.setRating(mCurRating);
         //locationAdapterViewHolder.mLocationAddress.setText(locations.getLocationAddress());
         //locationAdapterViewHolder.mType.setText(locations.getPlaceType());
     }
@@ -116,9 +117,10 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     }
 
     public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromTouch) {
-        DecimalFormat decimalFormat = new DecimalFormat("#.#");
-        mCurRating = Float.valueOf(decimalFormat.format((mCurRating * mCount + rating) / ++mCount));
+        DecimalFormat decimalFormat = new DecimalFormat("#,#");
+        mCurRating = Float.valueOf(decimalFormat.format((mCurRating * mCount + rating) / mCount));
         ratingBar.setRating(mCurRating);
+        notifyDataSetChanged();
     }
-
 }
+
