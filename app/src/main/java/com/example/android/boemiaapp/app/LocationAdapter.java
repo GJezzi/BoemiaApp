@@ -60,30 +60,24 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_location, viewGroup, false);
         view.setFocusable(true);
         final LocationViewHolder viewHolder = new LocationViewHolder(mContext, view);
-
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int adapterPos = viewHolder.getAdapterPosition();
-                if (adapterPos != RecyclerView.NO_POSITION){
-                    beerRatingAlertDialog();
-                    //Toast.makeText(mContext, mLocationName.getText().toString(), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(LocationViewHolder locationAdapterViewHolder, int position) {
-        Locations locations = mLocations.get(position);
+    public void onBindViewHolder(final LocationViewHolder locationAdapterViewHolder, final int position) {
+        final Locations locations = mLocations.get(position);
 
         locationAdapterViewHolder.mLocationName.setText(locations.getLocationName());
         locationAdapterViewHolder.mViewHolderRatingBar.setRating(mCurRating);
         //locationAdapterViewHolder.mLocationAddress.setText(locations.getLocationAddress());
         //locationAdapterViewHolder.mType.setText(locations.getPlaceType());
+
+        locationAdapterViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                beerRatingAlertDialog();
+            }
+        });
     }
 
     @Override
@@ -99,7 +93,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setTitle(null);
 
-        View ratingDialogView = inflater.inflate(R.layout.rating_alert_dialog, null, false);
+        final View ratingDialogView = inflater.inflate(R.layout.rating_alert_dialog, null, false);
         final RatingBar alertDialogRatingBar = (RatingBar) ratingDialogView.findViewById(R.id.alert_dialog_rating_bar);
         alertDialogRatingBar.setRating(rating);
         alertDialogRatingBar.setOnRatingBarChangeListener(this);
@@ -118,8 +112,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
     public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromTouch) {
         DecimalFormat decimalFormat = new DecimalFormat("#,#");
-        mCurRating = Float.valueOf(decimalFormat.format((mCurRating * mCount + rating) / mCount));
-        ratingBar.setRating(mCurRating);
+        mCurRating = Float.valueOf(decimalFormat.format((mCurRating * mCount + rating) / 1 + mCount));
         notifyDataSetChanged();
     }
 }
