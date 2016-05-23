@@ -4,12 +4,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 import com.example.android.boemiaapp.R;
 
@@ -21,10 +22,12 @@ import java.util.ArrayList;
  */
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationViewHolder> implements RatingBar.OnRatingBarChangeListener{
 
+    final static String LOG_TAG = LocationAdapter.class.getSimpleName();
+
     private Context mContext;
     private ArrayList<Locations> mLocations;
     int mCount;
-    float mCurRating;
+    float mCurRate;
 
     public LocationAdapter (Context context, ArrayList<Locations> locations) {
         this.mContext = context;
@@ -32,11 +35,12 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
     }
 
-    public class LocationViewHolder extends RecyclerView.ViewHolder {
+     public class LocationViewHolder extends RecyclerView.ViewHolder  {
         private Context mContext;
         public final TextView mLocationName;
         public final RatingBar mAlertDialogRatingBar;
         public final RatingBar mViewHolderRatingBar;
+        public int mPosition;
         //public final TextView mLocationAddress;
         //public final TextView mType;
 
@@ -47,19 +51,17 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
             mLocationName = (TextView) view.findViewById(R.id.list_item_location_name_textview);
             mAlertDialogRatingBar = (RatingBar) view.findViewById(R.id.alert_dialog_rating_bar);
             mViewHolderRatingBar = (RatingBar) view.findViewById(R.id.list_item_location_rating_bar);
-
             //mLocationAddress = (TextView) view.findViewById(R.id.list_item_location_address_textview);
             //mType = (TextView) view.findViewById(R.id.list_item_location_type_text_view);
-
         }
-
     }
 
     @Override
     public LocationViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_location, viewGroup, false);
+        LocationViewHolder viewHolder = new LocationViewHolder(mContext, view);
+        viewHolder.getAdapterPosition();
         view.setFocusable(true);
-        final LocationViewHolder viewHolder = new LocationViewHolder(mContext, view);
         return viewHolder;
     }
 
@@ -67,15 +69,18 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     public void onBindViewHolder(final LocationViewHolder locationAdapterViewHolder, final int position) {
         final Locations locations = mLocations.get(position);
 
+
+        locationAdapterViewHolder.mPosition = position;
         locationAdapterViewHolder.mLocationName.setText(locations.getLocationName());
-        locationAdapterViewHolder.mViewHolderRatingBar.setRating(mCurRating);
+        locationAdapterViewHolder.mViewHolderRatingBar.setRating(mCurRate);
         //locationAdapterViewHolder.mLocationAddress.setText(locations.getLocationAddress());
         //locationAdapterViewHolder.mType.setText(locations.getPlaceType());
 
         locationAdapterViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                beerRatingAlertDialog();
+                alertDialogCreation();
+                Log.d(LOG_TAG, "Clicked: " + locationAdapterViewHolder.mPosition);
             }
         });
     }
@@ -86,7 +91,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         return mLocations.size();
     }
 
-    private void beerRatingAlertDialog() {
+    private void alertDialogCreation() {
         final float rating = 0;
         AlertDialog alertDialog;
         final LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -110,10 +115,14 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         alertDialog.show();
     }
 
-    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromTouch) {
-        DecimalFormat decimalFormat = new DecimalFormat("#,#");
-        mCurRating = Float.valueOf(decimalFormat.format((mCurRating * mCount + rating) / 1 + mCount));
+    @Override
+    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+        DecimalFormat decimalFormat = new DecimalFormat("#.#");
+        mCurRate = Float.valueOf(decimalFormat.format((mCurRate * mCount + rating) / ++mCount));
+        ratingBar.setRating(rating);
         notifyDataSetChanged();
+
+        Toast.makeText(mContext, "New Rating: " + mCurRate, Toast.LENGTH_SHORT).show();
     }
 }
 

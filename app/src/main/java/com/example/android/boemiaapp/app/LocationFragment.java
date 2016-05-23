@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * Created by gjezzi on 18/03/16.
  */
-public class LocationFragment extends android.support.v4.app.Fragment {
+public class LocationFragment extends android.support.v4.app.Fragment  {
 
     private final String LOG_TAG = LocationFragment.class.getSimpleName();
     private final static int PLACE_PICKER_REQUEST = 1;
