@@ -16,6 +16,7 @@ public class Locations {
     private double mLatitude;
     private double mLongitude;
     private float mRating;
+    private int mCount;
 
     public String getLocationName() { return mLocationName; }
 
@@ -50,6 +51,14 @@ public class Locations {
     public float getRating() { return mRating; }
 
     public void setRating(float rating) { this.mRating = rating; }
+
+    public int getCount() {
+        return mCount;
+    }
+
+    public void setCount(int mCount) {
+        this.mCount = mCount;
+    }
 
     @Override
     public boolean equals(Object o) {
