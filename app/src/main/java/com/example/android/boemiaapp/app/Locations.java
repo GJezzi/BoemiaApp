@@ -5,14 +5,11 @@ package com.example.android.boemiaapp.app;
  */
 public class Locations {
 
-//    private GoogleApiClient mGoogleApiClient;
-//    private Locations mLocationInfo;
-//    private TextView mTextView;
-
     private String mLocationName;
     private String mLocationAddress;
     private String mType;
 
+    private int mId;
     private double mLatitude;
     private double mLongitude;
     private float mRating;
@@ -58,6 +55,14 @@ public class Locations {
 
     public void setCount(int mCount) {
         this.mCount = mCount;
+    }
+
+    public int getId() {
+        return mId;
+    }
+
+    public void setId(int mId) {
+        this.mId = mId;
     }
 
     @Override

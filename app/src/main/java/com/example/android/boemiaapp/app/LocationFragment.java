@@ -23,6 +23,8 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+
 /**
  * Created by gjezzi on 18/03/16.
  */
@@ -33,12 +35,16 @@ public class LocationFragment extends android.support.v4.app.Fragment  {
 
     private ArrayList<Locations> mLocations = new ArrayList<>();
     private LocationAdapter mLocationAdapter;
+    private Realm mRealm;
 
     public LocationFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //mRealm = Realm.getDefaultInstance();
+
         // Add this line in order for this fragment to handle menu events.
         setHasOptionsMenu(true);
     }
@@ -84,6 +90,12 @@ public class LocationFragment extends android.support.v4.app.Fragment  {
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mRealm.close();
     }
 
     @Override
