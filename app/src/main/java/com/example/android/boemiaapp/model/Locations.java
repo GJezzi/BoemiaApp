@@ -1,18 +1,29 @@
-package com.example.android.boemiaapp.app;
+package com.example.android.boemiaapp.model;
+
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by gjezzi on 22/03/16.
  */
-public class Locations {
+
+@RealmClass
+public class Locations extends RealmObject {
+
+    @PrimaryKey
+    private long mId;
 
     private String mLocationName;
     private String mLocationAddress;
-    private String mType;
+    private float mRating;
 
-    private int mId;
+    @Ignore
+    private String mType;
     private double mLatitude;
     private double mLongitude;
-    private float mRating;
+
     private int mCount;
 
     public String getLocationName() { return mLocationName; }
@@ -57,11 +68,11 @@ public class Locations {
         this.mCount = mCount;
     }
 
-    public int getId() {
+    public long getId() {
         return mId;
     }
 
-    public void setId(int mId) {
+    public void setId(long mId) {
         this.mId = mId;
     }
 

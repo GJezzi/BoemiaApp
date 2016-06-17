@@ -1,4 +1,4 @@
-package com.example.android.boemiaapp.app;
+package com.example.android.boemiaapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.android.boemiaapp.R;
+import com.example.android.boemiaapp.app.LocationFragment;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.android.boemiaapp.R;
+import com.example.android.boemiaapp.adapters.LocationAdapter;
+import com.example.android.boemiaapp.model.Locations;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -20,10 +22,10 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by gjezzi on 18/03/16.
@@ -33,7 +35,6 @@ public class LocationFragment extends android.support.v4.app.Fragment  {
     private final String LOG_TAG = LocationFragment.class.getSimpleName();
     private final static int PLACE_PICKER_REQUEST = 1;
 
-    private ArrayList<Locations> mLocations = new ArrayList<>();
     private LocationAdapter mLocationAdapter;
     private Realm mRealm;
 
@@ -43,8 +44,6 @@ public class LocationFragment extends android.support.v4.app.Fragment  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //mRealm = Realm.getDefaultInstance();
-
         // Add this line in order for this fragment to handle menu events.
         setHasOptionsMenu(true);
     }
@@ -52,6 +51,8 @@ public class LocationFragment extends android.support.v4.app.Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View rootView = inflater.inflate(R.layout.fragment_location, container, false);
+
+        RealmResults<Locations> locations = mRealm.where(Locations.class).findAllSortedAsync("id");
 
         RecyclerView recyclerView;
         FloatingActionButton floatingActionButton;
@@ -63,7 +64,7 @@ public class LocationFragment extends android.support.v4.app.Fragment  {
 
         recyclerView.setHasFixedSize(true);
 
-        mLocationAdapter = new LocationAdapter(getActivity(), mLocations);
+        mLocationAdapter = new LocationAdapter(getActivity(), mRealm, locations);
         recyclerView.setAdapter(mLocationAdapter);
 
         floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.location_fab);
@@ -104,10 +105,10 @@ public class LocationFragment extends android.support.v4.app.Fragment  {
             if (resultCode == Activity.RESULT_OK) {
                 Place selectedPlace = PlacePicker.getPlace(getActivity(), data);
 
-                final CharSequence mName = selectedPlace.getName();
-                final float mRating = selectedPlace.getRating();
+                final CharSequence name = selectedPlace.getName();
+                final float rating = selectedPlace.getRating();
                 //final CharSequence mAddress = selectedPlace.getAddress();
-                final List mType = selectedPlace.getPlaceTypes();
+                final List type = selectedPlace.getPlaceTypes();
                 LatLng latLong = selectedPlace.getLatLng();
 
                 String attributions = PlacePicker.getAttributions(data);
@@ -116,18 +117,18 @@ public class LocationFragment extends android.support.v4.app.Fragment  {
                 }
 
                 Locations locationInfo = new Locations();
-                locationInfo.setLocationName(mName.toString());
-                locationInfo.setRating(mRating);
+                locationInfo.setLocationName(name.toString());
+                locationInfo.setRating(rating);
                 //locationInfo.setLocationAddress(mAddress.toString());
                 locationInfo.setLat(latLong.latitude);
                 locationInfo.setLong(latLong.longitude);
                 //locationInfo.setLocationType(mType.toString());
 
-                if (mLocations.contains(locationInfo)) {
-                    mLocations.remove(locationInfo);
-                }
-                    mLocations.add(locationInfo);
-                    mLocationAdapter.notifyDataSetChanged();
+//                if (contains(locationInfo)) {
+//                    mLocations.remove(locationInfo);
+//                }
+//                    mLocations.add(locationInfo);
+//                    mLocationAdapter.notifyDataSetChanged();
 
             } else {
                 super.onActivityResult(requestCode, resultCode, data);

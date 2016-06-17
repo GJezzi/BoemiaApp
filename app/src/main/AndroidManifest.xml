@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.boemiaapp">
+    package="com.example.android.boemiaapp" >
 
     <!-- Permissions For GooglePlay Services -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -32,12 +32,12 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:fullBackupContent="true">
+        android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_api_id" />
@@ -49,41 +49,41 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name=".app.MainActivity"
+            android:name=".activity.MainActivity"
             android:hardwareAccelerated="true"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".app.LoginActivity"
-            android:label="@string/action_login"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".app.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.boemiaapp.app.MainActivity" />
-        </activity>
-
         <activity
-            android:name=".app.SettingsActivity"
-            android:label="@string/action_settings"
-            android:theme="@style/AppTheme"
+            android:name=".activity.LoginActivity"
+            android:label="@string/action_login"
+            android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName="app.MainActivity">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.boemiaapp.app.MainActivity" />
+                android:value=".activity.MainActivity" />
         </activity>
-
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:label="@string/action_settings"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MainActivity" />
+        </activity>
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
+
 </manifest>

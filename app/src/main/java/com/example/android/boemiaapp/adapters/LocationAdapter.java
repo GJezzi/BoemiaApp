@@ -1,4 +1,4 @@
-package com.example.android.boemiaapp.app;
+package com.example.android.boemiaapp.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,24 +12,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.boemiaapp.R;
+import com.example.android.boemiaapp.model.Locations;
 
-import java.util.ArrayList;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by gjezzi on 24/03/16.
  */
-public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationViewHolder>{
+public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationViewHolder> {
 
     final static String LOG_TAG = LocationAdapter.class.getSimpleName();
 
     private Context mContext;
-    private ArrayList<Locations> mLocations;
+    private Realm mRealm;
+    private RealmResults<Locations> mLocations;
 
 
-    public LocationAdapter (Context context, ArrayList<Locations> locations) {
+    public LocationAdapter (Context context, Realm realm, RealmResults<Locations> locations) {
+        this.mRealm = realm;
         this.mContext = context;
         this.mLocations = locations;
-
     }
 
      public class LocationViewHolder extends RecyclerView.ViewHolder  {
@@ -81,9 +84,24 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     }
 
     @Override
+    public long getItemId(int position) {
+        return mLocations.get(position).getId();
+    }
+
+    @Override
     public int getItemCount() {
         if (mLocations == null) return 0;
         return mLocations.size();
+    }
+
+    public void add(long id) {
+        Locations locations = new Locations();
+        locations.setId(id);
+
+        mRealm.beginTransaction();
+        mRealm.copyToRealmOrUpdate(locations);
+        mRealm.commitTransaction();
+        notifyDataSetChanged();
     }
 
     private void alertDialogCreation(final int position) {

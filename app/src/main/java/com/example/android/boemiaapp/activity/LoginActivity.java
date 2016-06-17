@@ -1,4 +1,4 @@
-package com.example.android.boemiaapp.app;
+package com.example.android.boemiaapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
